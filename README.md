@@ -1,5 +1,12 @@
 # Cpp2IL
 
+# QUICK BUILD
+```
+git clone https://github.com/NepMods/Cpp2IL-Analysis/
+cd Cpp2IL-Analysis
+chmod +x build.sh
+./build.sh
+```
 [![NuGet](https://img.shields.io/nuget/v/Samboy063.Cpp2IL.Core)](https://www.nuget.org/packages/Samboy063.Cpp2IL.Core/)
 
 # Important: Project is being rewritten
