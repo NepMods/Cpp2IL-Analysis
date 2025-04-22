@@ -1,17 +1,18 @@
-namespace LibCpp2IL.Wasm;
-
-public class WasmResizableLimits
+namespace LibCpp2IL.Wasm
 {
-    public byte Flags;
-    public ulong Initial;
-    public ulong Max;
-
-    public WasmResizableLimits(WasmFile readFrom)
+    public class WasmResizableLimits
     {
-        Flags = readFrom.ReadByte();
-        Initial = readFrom.BaseStream.ReadLEB128Unsigned();
+        public byte Flags;
+        public ulong Initial;
+        public ulong Max;
 
-        if (Flags == 1)
-            Max = readFrom.BaseStream.ReadLEB128Unsigned();
+        public WasmResizableLimits(WasmFile readFrom)
+        {
+            Flags = readFrom.ReadByte();
+            Initial = readFrom.BaseStream.ReadLEB128Unsigned();
+            
+            if(Flags == 1)
+                Max = readFrom.BaseStream.ReadLEB128Unsigned();
+        }
     }
 }

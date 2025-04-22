@@ -1,23 +1,11 @@
-using LibCpp2IL.Metadata;
-
-namespace LibCpp2IL.BinaryStructures;
-
-public class Il2CppGenericClass : ReadableClass
+#pragma warning disable 8618
+//Disable null check because this stuff is initialized by reflection
+namespace LibCpp2IL.BinaryStructures
 {
-    public long TypeDefinitionIndex; /* the generic type definition */
-    public Il2CppGenericContext Context = null!; /* a context that contains the type instantiation doesn't contain any method instantiation */
-    public ulong CachedClass; /* if present, the Il2CppClass corresponding to the instantiation.  */
-
-    public Il2CppTypeDefinition TypeDefinition => LibCpp2IlMain.MetadataVersion < 27f
-        ? LibCpp2IlMain.TheMetadata!.typeDefs[(int)TypeDefinitionIndex]
-        : V27BaseType!.AsClass();
-
-    public Il2CppType? V27BaseType => LibCpp2IlMain.MetadataVersion < 27f ? null : LibCpp2IlMain.Binary!.ReadReadableAtVirtualAddress<Il2CppType>((ulong)TypeDefinitionIndex);
-
-    public override void Read(ClassReadingBinaryReader reader)
+    public class Il2CppGenericClass
     {
-        TypeDefinitionIndex = reader.ReadNInt();
-        Context = reader.ReadReadableHereNoLock<Il2CppGenericContext>();
-        CachedClass = reader.ReadNUint();
+        public long typeDefinitionIndex; /* the generic type definition */
+        public Il2CppGenericContext context; /* a context that contains the type instantiation doesn't contain any method instantiation */
+        public ulong cached_class; /* if present, the Il2CppClass corresponding to the instantiation.  */
     }
 }

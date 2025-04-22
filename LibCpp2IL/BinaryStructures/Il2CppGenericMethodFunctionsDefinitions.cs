@@ -1,13 +1,10 @@
-namespace LibCpp2IL.BinaryStructures;
-
-public class Il2CppGenericMethodFunctionsDefinitions : ReadableClass
+#pragma warning disable 8618
+//Disable null check because this stuff is initialized by reflection
+namespace LibCpp2IL.BinaryStructures
 {
-    public int GenericMethodIndex;
-    public Il2CppGenericMethodIndices Indices = null!;
-
-    public override void Read(ClassReadingBinaryReader reader)
+    public class Il2CppGenericMethodFunctionsDefinitions
     {
-        GenericMethodIndex = reader.ReadInt32();
-        Indices = reader.ReadReadableHereNoLock<Il2CppGenericMethodIndices>();
+        public int genericMethodIndex;
+        public Il2CppGenericMethodIndices indices;
     }
 }

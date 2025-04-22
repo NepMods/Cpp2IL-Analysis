@@ -1,18 +1,12 @@
 ﻿using System.Reflection;
 using LibCpp2IL.Metadata;
 
-namespace LibCpp2IL.Reflection;
-
-public class Il2CppFieldReflectionData(
-    Il2CppFieldDefinition field,
-    FieldAttributes attributes,
-    object? defaultValue,
-    int indexInParent,
-    int fieldOffset)
+namespace LibCpp2IL
 {
-    public Il2CppFieldDefinition Field = field;
-    public FieldAttributes Attributes = attributes;
-    public object? DefaultValue = defaultValue;
-    public int IndexInParent = indexInParent;
-    public int FieldOffset = fieldOffset;
+    public struct Il2CppFieldReflectionData
+    {
+        public Il2CppFieldDefinition field;
+        public FieldAttributes attributes;
+        public object? defaultValue;
+    }
 }

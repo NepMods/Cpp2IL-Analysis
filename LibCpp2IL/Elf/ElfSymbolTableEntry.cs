@@ -1,16 +1,17 @@
-﻿namespace LibCpp2IL.Elf;
-
-public class ElfSymbolTableEntry
+﻿namespace LibCpp2IL.Elf
 {
-    public enum ElfSymbolEntryType
+    public class ElfSymbolTableEntry
     {
-        Function,
-        Name,
-        Import,
-        Unknown
-    }
+        public enum ElfSymbolEntryType
+        {
+            FUNCTION,
+            NAME,
+            IMPORT,
+            UNKNOWN
+        }
 
-    public string Name = null!;
-    public ElfSymbolEntryType Type;
-    public ulong VirtualAddress;
+        public string Name;
+        public ElfSymbolEntryType Type;
+        public ulong VirtualAddress;
+    }
 }

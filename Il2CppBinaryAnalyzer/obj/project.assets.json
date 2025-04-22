@@ -1,0 +1,139 @@
+{
+  "version": 3,
+  "targets": {
+    "net6.0": {
+      "IndexRange/1.0.0": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.1/IndexRange.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.1/IndexRange.dll": {}
+        }
+      },
+      "Samboy063.LibCpp2IL/2022.0.7": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "dependencies": {
+          "IndexRange": "1.0.0",
+          "Samboy063.WasmDisassembler": "2022.0.2"
+        },
+        "compile": {
+          "bin/placeholder/Samboy063.LibCpp2IL.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Samboy063.LibCpp2IL.dll": {}
+        }
+      },
+      "Samboy063.WasmDisassembler/2022.0.2": {
+        "type": "project",
+        "framework": ".NETStandard,Version=v2.0",
+        "compile": {
+          "bin/placeholder/Samboy063.WasmDisassembler.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Samboy063.WasmDisassembler.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "IndexRange/1.0.0": {
+      "sha512": "6TgS1JLSUkpmPLfXBPaAgB39ZUix8E4soXWk2XSDcscVe84i1JKzIAtA7jHbRHSkOOrcr6YA0MpLCeq98y9mYQ==",
+      "type": "package",
+      "path": "indexrange/1.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "icon.png",
+        "indexrange.1.0.0.nupkg.sha512",
+        "indexrange.nuspec",
+        "lib/net45/IndexRange.dll",
+        "lib/net471/IndexRange.dll",
+        "lib/netstandard2.0/IndexRange.dll",
+        "lib/netstandard2.1/IndexRange.dll"
+      ]
+    },
+    "Samboy063.LibCpp2IL/2022.0.7": {
+      "type": "project",
+      "path": "../LibCpp2IL/LibCpp2IL.csproj",
+      "msbuildProject": "../LibCpp2IL/LibCpp2IL.csproj"
+    },
+    "Samboy063.WasmDisassembler/2022.0.2": {
+      "type": "project",
+      "path": "../WasmDisassembler/WasmDisassembler.csproj",
+      "msbuildProject": "../WasmDisassembler/WasmDisassembler.csproj"
+    }
+  },
+  "projectFileDependencyGroups": {
+    "net6.0": [
+      "Samboy063.LibCpp2IL >= 2022.0.7"
+    ]
+  },
+  "packageFolders": {
+    "/home/arjun/.nuget/packages/": {}
+  },
+  "project": {
+    "version": "1.0.0",
+    "restore": {
+      "projectUniqueName": "/home/arjun/Downloads/Cpp2IL-2022.0.7/Il2CppBinaryAnalyzer/Il2CppBinaryAnalyzer.csproj",
+      "projectName": "Il2CppBinaryAnalyzer",
+      "projectPath": "/home/arjun/Downloads/Cpp2IL-2022.0.7/Il2CppBinaryAnalyzer/Il2CppBinaryAnalyzer.csproj",
+      "packagesPath": "/home/arjun/.nuget/packages/",
+      "outputPath": "/home/arjun/Downloads/Cpp2IL-2022.0.7/Il2CppBinaryAnalyzer/obj/",
+      "projectStyle": "PackageReference",
+      "configFilePaths": [
+        "/home/arjun/.nuget/NuGet/NuGet.Config"
+      ],
+      "originalTargetFrameworks": [
+        "net6.0"
+      ],
+      "sources": {
+        "https://api.nuget.org/v3/index.json": {}
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "projectReferences": {
+            "/home/arjun/Downloads/Cpp2IL-2022.0.7/LibCpp2IL/LibCpp2IL.csproj": {
+              "projectPath": "/home/arjun/Downloads/Cpp2IL-2022.0.7/LibCpp2IL/LibCpp2IL.csproj"
+            }
+          }
+        }
+      },
+      "warningProperties": {
+        "warnAsError": [
+          "NU1605"
+        ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "all"
+      },
+      "SdkAnalysisLevel": "9.0.100"
+    },
+    "frameworks": {
+      "net6.0": {
+        "targetAlias": "net6.0",
+        "imports": [
+          "net461",
+          "net462",
+          "net47",
+          "net471",
+          "net472",
+          "net48",
+          "net481"
+        ],
+        "assetTargetFallback": true,
+        "warn": true,
+        "frameworkReferences": {
+          "Microsoft.NETCore.App": {
+            "privateAssets": "all"
+          }
+        },
+        "runtimeIdentifierGraphPath": "/home/arjun/.dotnet/sdk/9.0.100/RuntimeIdentifierGraph.json"
+      }
+    }
+  }
+}

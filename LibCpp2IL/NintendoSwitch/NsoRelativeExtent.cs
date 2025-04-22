@@ -1,7 +1,8 @@
-﻿namespace LibCpp2IL.NintendoSwitch;
-
-public class NsoRelativeExtent
+﻿namespace LibCpp2IL.NintendoSwitch
 {
-    public uint RegionRoDataOffset;
-    public uint RegionSize;
+    public class NsoRelativeExtent
+    {
+        public uint RegionRoDataOffset;
+        public uint RegionSize;
+    }
 }

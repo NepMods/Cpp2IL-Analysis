@@ -1,18 +1,19 @@
 using System.Collections.Generic;
 
-namespace LibCpp2IL.Wasm;
-
-public class WasmTableSection : WasmSection
+namespace LibCpp2IL.Wasm
 {
-    public ulong TableCount;
-    public readonly List<WasmTableType> Tables = [];
-
-    internal WasmTableSection(WasmSectionId type, long pointer, ulong size, WasmFile file) : base(type, pointer, size)
+    public class WasmTableSection : WasmSection
     {
-        TableCount = file.BaseStream.ReadLEB128Unsigned();
-        for (var i = 0UL; i < TableCount; i++)
+        public ulong TableCount;
+        public readonly List<WasmTableType> Tables = new();
+        
+        internal WasmTableSection(WasmSectionId type, long pointer, ulong size, WasmFile file) : base(type, pointer, size)
         {
-            Tables.Add(new(file));
+            TableCount = file.BaseStream.ReadLEB128Unsigned();
+            for (var i = 0UL; i < TableCount; i++)
+            {
+                Tables.Add(new(file));
+            }
         }
     }
 }

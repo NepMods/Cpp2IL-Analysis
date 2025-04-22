@@ -1,15 +1,9 @@
-﻿namespace LibCpp2IL.BinaryStructures;
-
-public class Il2CppTokenRangePair : ReadableClass
+﻿namespace LibCpp2IL.BinaryStructures
 {
-    public int token;
-    public int start;
-    public int length;
-
-    public override void Read(ClassReadingBinaryReader reader)
+    public class Il2CppTokenRangePair
     {
-        token = reader.ReadInt32();
-        start = reader.ReadInt32();
-        length = reader.ReadInt32();
+        public int token;
+        public int start;
+        public int length;
     }
 }

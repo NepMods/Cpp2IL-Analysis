@@ -1,13 +1,8 @@
-﻿namespace LibCpp2IL.Elf;
-
-public class ElfRelEntry : ReadableClass
+﻿namespace LibCpp2IL.Elf
 {
-    public ulong Offset;
-    public ulong Info;
-
-    public override void Read(ClassReadingBinaryReader reader)
+    public class ElfRelEntry
     {
-        Offset = reader.ReadNUint();
-        Info = reader.ReadNUint();
+        public ulong Offset;
+        public ulong Info;
     }
 }

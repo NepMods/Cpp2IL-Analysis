@@ -1,48 +1,47 @@
-﻿ <Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <Company>Samboy063</Company>
-        <Copyright>Copyright © Samboy063 2019-2023</Copyright>
-        <Configurations>Debug;Release</Configurations>
-        <DebugType>embedded</DebugType>
-        <EnableCompressionInSingleFile>true</EnableCompressionInSingleFile>
-        <IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
-        <LangVersion>12</LangVersion>
+        <LangVersion>10</LangVersion>
         <Nullable>enable</Nullable>
+        <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+        <RuntimeIdentifiers>ubuntu-x64;win-x64;osx-x64;win7-x64</RuntimeIdentifiers>
         <OutputType>Exe</OutputType>
-        <PublishSingleFile Condition="'$(TargetFramework)'!='net472' and '$(GITHUB_ACTIONS)' == 'true'">true</PublishSingleFile>
-        <TargetFrameworks>net9.0;net472</TargetFrameworks>
-        <VersionPrefix>2022.1.0</VersionPrefix>
+        <PublishTrimmed Condition="'$(TargetFramework)' != 'net472'">true</PublishTrimmed>
+        <TrimMode>link</TrimMode>
+        <PublishSingleFile Condition="'$(TargetFramework)' != 'net472'">true</PublishSingleFile>
+        <IncludeNativeLibrariesForSelfExtract Condition="'$(TargetFramework)' != 'net472'">true</IncludeNativeLibrariesForSelfExtract>
+        <TargetFrameworks>net472;net6.0</TargetFrameworks>
         <ServerGarbageCollection>true</ServerGarbageCollection>
     </PropertyGroup>
 
-    <PropertyGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net6.0'))">
-        <TrimMode>partial</TrimMode>
-        <PublishTrimmed>true</PublishTrimmed>
-    </PropertyGroup>
-     
-     <ItemGroup Condition="$([MSBuild]::IsTargetFrameworkCompatible('$(TargetFramework)', 'net7.0'))">
-         <TrimmerRootAssembly Include="System.Runtime" />
-         <TrimmerRootAssembly Include="System.Private.CoreLib" />
-     </ItemGroup>
+    <ItemGroup>
+        <!--Fixes harmonyx-->
+        <TrimmerRootAssembly Include="mscorlib" Visible="false" />
+    </ItemGroup>
 
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x64' ">
         <OutputPath>bin\x64\Debug\</OutputPath>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <PlatformTarget>x64</PlatformTarget>
+    </PropertyGroup>
+
     <ItemGroup>
-        <PackageReference Include="CommandLineParser" Version="2.9.1" />
-        <PackageReference Include="Pastel" Version="6.0.1" />
-        <PackageReference Include="PolySharp" Version="1.15.0">
-          <PrivateAssets>all</PrivateAssets>
-          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
+        <PackageReference Include="CommandLineParser" Version="2.8.0" />
+        <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+        <PackageReference Include="Pastel" Version="2.1.0" />
+        <PackageReference Include="System.Runtime.InteropServices" Version="4.3.0" />
     </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\Cpp2IL.Core\Cpp2IL.Core.csproj" />
     </ItemGroup>
 
-    <ItemGroup Condition="'$(TargetFramework)' == 'net472'">
-        <Reference Include="System.IO.Compression" />
+    <ItemGroup>
+        <Reference Include="System.IO.Compression" Condition="'$(TargetFramework)' == 'net472'" />
     </ItemGroup>
 </Project>

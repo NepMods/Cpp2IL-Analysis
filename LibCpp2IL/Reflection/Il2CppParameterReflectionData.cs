@@ -3,40 +3,29 @@ using System.Text;
 using LibCpp2IL.BinaryStructures;
 
 #pragma warning disable 8618
-namespace LibCpp2IL.Reflection;
-
-public class Il2CppParameterReflectionData
+namespace LibCpp2IL.Reflection
 {
-    public string ParameterName;
-    public Il2CppType RawType;
-    public Il2CppTypeReflectionData Type;
-    public ParameterAttributes Attributes;
-    public object? DefaultValue;
-    public int ParameterIndex;
-
-    public bool IsRefOrOut => Attributes.HasFlag(ParameterAttributes.Out) || RawType.Byref == 1;
-
-    public override string ToString()
+    public class Il2CppParameterReflectionData
     {
-        var result = new StringBuilder();
+        public string ParameterName;
+        public Il2CppType RawType;
+        public Il2CppTypeReflectionData Type;
+        public ParameterAttributes ParameterAttributes;
+        public object? DefaultValue;
 
-        if (Attributes.HasFlag(ParameterAttributes.Out))
-            result.Append("out ");
-        else if (Attributes.HasFlag(ParameterAttributes.In))
-            result.Append("in ");
-        else if (RawType.Byref == 1)
-            result.Append("ref ");
+        public override string ToString()
+        {
+            var result = new StringBuilder();
 
-        result.Append(Type).Append(" ");
+            if ((ParameterAttributes & ParameterAttributes.Out) != 0)
+                result.Append("out ");
 
-        if (string.IsNullOrEmpty(ParameterName))
-            result.Append("param_").Append(ParameterIndex);
-        else
-            result.Append(ParameterName);
+            result.Append(Type).Append(" ").Append(ParameterName);
 
-        if (Attributes.HasFlag(ParameterAttributes.HasDefault))
-            result.Append(" = ").Append(DefaultValue ?? "null");
+            if ((ParameterAttributes & ParameterAttributes.HasDefault) != 0)
+                result.Append(" = ").Append(DefaultValue ?? "null");
 
-        return result.ToString();
+            return result.ToString();
+        }
     }
 }

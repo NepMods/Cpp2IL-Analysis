@@ -1,7 +1,14 @@
-namespace LibCpp2IL.Wasm;
-
-public class WasmGlobalType(WasmFile readFrom)
+namespace LibCpp2IL.Wasm
 {
-    public WasmTypeEnum Type = (WasmTypeEnum)readFrom.ReadByte();
-    public byte Mutability = readFrom.ReadByte();
+    public class WasmGlobalType
+    {
+        public WasmTypeEnum Type;
+        public byte Mutability;
+
+        public WasmGlobalType(WasmFile readFrom)
+        {
+            Type = (WasmTypeEnum) readFrom.ReadByte();
+            Mutability = readFrom.ReadByte();
+        }
+    }
 }

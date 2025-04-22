@@ -1,17 +1,9 @@
-namespace LibCpp2IL.Metadata;
-
-public class Il2CppParameterDefaultValue : ReadableClass
+namespace LibCpp2IL.Metadata
 {
-    public int parameterIndex;
-    public int typeIndex;
-    public int dataIndex;
-
-    public object? ContainedDefaultValue => LibCpp2ILUtils.GetDefaultValue(dataIndex, typeIndex);
-
-    public override void Read(ClassReadingBinaryReader reader)
+    public class Il2CppParameterDefaultValue
     {
-        parameterIndex = reader.ReadInt32();
-        typeIndex = reader.ReadInt32();
-        dataIndex = reader.ReadInt32();
+        public int parameterIndex;
+        public int typeIndex;
+        public int dataIndex;
     }
 }

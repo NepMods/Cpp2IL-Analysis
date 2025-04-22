@@ -1,26 +1,27 @@
 ﻿using System;
 
-namespace LibCpp2IL.Logging;
-
-public class DefaultWriter : LogWriter
+namespace LibCpp2IL.Logging
 {
-    public override void Info(string message)
+    public class DefaultWriter : LogWriter
     {
-        Console.Write(message);
-    }
+        public override void Info(string message)
+        {
+            Console.Write(message);
+        }
 
-    public override void Warn(string message)
-    {
-        Console.Write(message);
-    }
+        public override void Warn(string message)
+        {
+            Console.Write(message);
+        }
 
-    public override void Error(string message)
-    {
-        Console.Write(message);
-    }
+        public override void Error(string message)
+        {
+            Console.Write(message);
+        }
 
-    public override void Verbose(string message)
-    {
-        Console.Write(message);
+        public override void Verbose(string message)
+        {
+            Console.Write(message);
+        }
     }
 }

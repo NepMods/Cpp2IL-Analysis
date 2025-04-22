@@ -1,85 +1,85 @@
 using System.Collections.Generic;
 
-namespace LibCpp2IL.Wasm;
-
-public class WasmElementSegment
+namespace LibCpp2IL.Wasm
 {
-    public byte Flags;
-    public ElementSegmentMode Mode;
-
-    public ulong TableIdx;
-    public ConstantExpression? Offset;
-    public ulong Count;
-
-    public byte ElemKind;
-    public List<ulong>? FunctionIndices;
-
-    public WasmTypeEnum ElemType;
-    public List<ConstantExpression>? ConstantExpressions;
-
-    public WasmElementSegment(WasmFile file)
+    public class WasmElementSegment
     {
-        Flags = file.ReadByte();
-        if ((Flags & 3) == 2)
-            //Active segment with explicit table index
-            TableIdx = file.BaseStream.ReadLEB128Unsigned();
-        else
-            //Default
-            TableIdx = 0;
+        public byte Flags;
+        public ElementSegmentMode Mode;
+        
+        public ulong TableIdx;
+        public ConstantExpression? Offset;
+        public ulong Count;
 
-        if ((Flags & 1) == 0)
-        {
-            //Active segment
-            Mode = ElementSegmentMode.Active;
-            Offset = new(file);
-        }
-        else if ((Flags & 2) == 0)
-            Mode = ElementSegmentMode.Passive;
-        else
-            Mode = ElementSegmentMode.Declarative;
+        public byte ElemKind;
+        public List<ulong>? FunctionIndices;
 
-        if ((Flags & 3) == 0)
+        public WasmTypeEnum ElemType;
+        public List<ConstantExpression>? ConstantExpressions;
+
+        public WasmElementSegment(WasmFile file)
         {
-            //Implicit element type
-            ElemKind = 0;
-            ElemType = WasmTypeEnum.funcRef;
-        }
-        else
-        {
-            //Explicit element type
-            var typeCode = file.ReadByte();
-            if ((Flags & 4) == 0)
-                ElemKind = typeCode;
+            Flags = file.ReadByte();
+            if ((Flags & 3) == 2)
+                //Active segment with explicit table index
+                TableIdx = file.BaseStream.ReadLEB128Unsigned();
             else
-                ElemType = (WasmTypeEnum)typeCode;
-        }
+                //Default
+                TableIdx = 0;
 
-        Count = file.BaseStream.ReadLEB128Unsigned();
-
-        if ((Flags & 4) == 0)
-        {
-            //List of function ids
-            FunctionIndices = [];
-            for (var i = 0UL; i < Count; i++)
+            if ((Flags & 1) == 0)
             {
-                FunctionIndices.Add(file.BaseStream.ReadLEB128Unsigned());
+                //Active segment
+                Mode = ElementSegmentMode.Active;
+                Offset = new(file);
+            } else if ((Flags & 2) == 0)
+                Mode = ElementSegmentMode.Passive;
+            else
+                Mode = ElementSegmentMode.Declarative;
+
+            if ((Flags & 3) == 0)
+            {
+                //Implicit element type
+                ElemKind = 0;
+                ElemType = WasmTypeEnum.funcRef;
+            }
+            else
+            {
+                //Explicit element type
+                var typeCode = file.ReadByte();
+                if ((Flags & 4) == 0)
+                    ElemKind = typeCode;
+                else
+                    ElemType = (WasmTypeEnum) typeCode;
+            }
+
+            Count = file.BaseStream.ReadLEB128Unsigned();
+
+            if ((Flags & 4) == 0)
+            {
+                //List of function ids
+                FunctionIndices = new();
+                for (var i = 0UL; i < Count; i++)
+                {
+                    FunctionIndices.Add(file.BaseStream.ReadLEB128Unsigned());
+                }
+            }
+            else
+            {
+                //List of expressions
+                ConstantExpressions = new();
+                for (var i = 0UL; i < Count; i++)
+                {
+                    ConstantExpressions.Add(new(file));
+                }
             }
         }
-        else
+        
+        public enum ElementSegmentMode
         {
-            //List of expressions
-            ConstantExpressions = [];
-            for (var i = 0UL; i < Count; i++)
-            {
-                ConstantExpressions.Add(new(file));
-            }
+            Active,
+            Passive,
+            Declarative
         }
-    }
-
-    public enum ElementSegmentMode
-    {
-        Active,
-        Passive,
-        Declarative
     }
 }

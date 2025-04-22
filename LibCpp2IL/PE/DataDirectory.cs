@@ -1,13 +1,8 @@
-namespace LibCpp2IL.PE;
-
-public class DataDirectory : ReadableClass
+namespace LibCpp2IL.PE
 {
-    public uint VirtualAddress;
-    public uint Size;
-
-    public override void Read(ClassReadingBinaryReader reader)
+    public class DataDirectory
     {
-        VirtualAddress = reader.ReadUInt32();
-        Size = reader.ReadUInt32();
+        public uint VirtualAddress;
+        public uint Size;
     }
 }

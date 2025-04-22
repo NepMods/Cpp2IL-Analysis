@@ -1,8 +1,9 @@
-﻿namespace LibCpp2IL.NintendoSwitch;
-
-public class NsoSegmentHeader
+﻿namespace LibCpp2IL.NintendoSwitch
 {
-    public uint FileOffset;
-    public uint MemoryOffset;
-    public uint DecompressedSize;
+    public class NsoSegmentHeader
+    {
+        public uint FileOffset;
+        public uint MemoryOffset;
+        public uint DecompressedSize;
+    }
 }

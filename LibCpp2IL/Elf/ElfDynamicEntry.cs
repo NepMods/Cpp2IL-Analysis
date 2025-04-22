@@ -1,13 +1,8 @@
-﻿namespace LibCpp2IL.Elf;
-
-public class ElfDynamicEntry : ReadableClass
+﻿namespace LibCpp2IL.Elf
 {
-    public ElfDynamicType Tag;
-    public ulong Value;
-
-    public override void Read(ClassReadingBinaryReader reader)
+    public class ElfDynamicEntry
     {
-        Tag = (ElfDynamicType)reader.ReadNInt();
-        Value = reader.ReadNUint();
+        public ElfDynamicType Tag;
+        public ulong Value;
     }
 }

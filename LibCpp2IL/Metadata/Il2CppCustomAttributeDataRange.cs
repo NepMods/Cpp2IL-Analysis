@@ -1,16 +1,11 @@
-﻿namespace LibCpp2IL.Metadata;
-
-public class Il2CppCustomAttributeDataRange : ReadableClass, IIl2CppTokenProvider
+﻿namespace LibCpp2IL.Metadata
 {
-    //Since v29
-    public uint token;
-    public uint startOffset;
-
-    public uint Token => token;
-
-    public override void Read(ClassReadingBinaryReader reader)
+    public class Il2CppCustomAttributeDataRange : IIl2CppTokenProvider
     {
-        token = reader.ReadUInt32();
-        startOffset = reader.ReadUInt32();
+        //Since v29
+        public uint token;
+        public uint startOffset;
+
+        public uint Token => token;
     }
 }

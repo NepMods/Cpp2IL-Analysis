@@ -1,7 +1,14 @@
-namespace LibCpp2IL.Wasm;
-
-public class WasmTableType(WasmFile readFrom)
+namespace LibCpp2IL.Wasm
 {
-    public WasmTypeEnum ElemType = (WasmTypeEnum)readFrom.ReadByte();
-    public WasmResizableLimits Limits = new(readFrom);
+    public class WasmTableType
+    {
+        public WasmTypeEnum ElemType;
+        public WasmResizableLimits Limits;
+
+        public WasmTableType(WasmFile readFrom)
+        {
+            ElemType = (WasmTypeEnum) readFrom.ReadByte();
+            Limits = new(readFrom);
+        }
+    }
 }

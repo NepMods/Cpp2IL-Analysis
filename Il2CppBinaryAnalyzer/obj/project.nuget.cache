@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "7s8pq6lRgps=",
+  "success": true,
+  "projectFilePath": "/home/arjun/Downloads/Cpp2IL-2022.0.7/Il2CppBinaryAnalyzer/Il2CppBinaryAnalyzer.csproj",
+  "expectedPackageFiles": [
+    "/home/arjun/.nuget/packages/indexrange/1.0.0/indexrange.1.0.0.nupkg.sha512"
+  ],
+  "logs": []
+}

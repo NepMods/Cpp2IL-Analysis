@@ -1,13 +1,8 @@
-namespace LibCpp2IL.Metadata;
-
-public class Il2CppMetadataUsagePair : ReadableClass
+namespace LibCpp2IL.Metadata
 {
-    public uint destinationIndex;
-    public uint encodedSourceIndex;
-
-    public override void Read(ClassReadingBinaryReader reader)
+    public class Il2CppMetadataUsagePair
     {
-        destinationIndex = reader.ReadUInt32();
-        encodedSourceIndex = reader.ReadUInt32();
+        public uint destinationIndex;
+        public uint encodedSourceIndex;
     }
 }

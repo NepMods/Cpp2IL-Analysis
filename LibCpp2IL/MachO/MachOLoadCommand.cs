@@ -1,51 +1,53 @@
 ﻿using System;
 using System.Text;
 
-namespace LibCpp2IL.MachO;
-
-public class MachOLoadCommand : ReadableClass
+namespace LibCpp2IL.MachO
 {
-    public LoadCommandId Command;
-    public uint CommandSize;
-
-    public ReadableClass? CommandData;
-    public byte[]? UnknownCommandData = null;
-
-
-    public string? UnknownDataAsString => UnknownCommandData == null ? null : Encoding.UTF8.GetString(UnknownCommandData);
-
-    public override void Read(ClassReadingBinaryReader reader)
+    public class MachOLoadCommand
     {
-        Command = (LoadCommandId)reader.ReadUInt32();
-        CommandSize = reader.ReadUInt32();
+        public LoadCommandId Command;
+        public uint CommandSize;
 
-        switch (Command)
+        public object? CommandData;
+        public byte[]? UnknownCommandData = null;
+        
+        
+        public string? UnknownDataAsString => UnknownCommandData == null ? null : Encoding.UTF8.GetString(UnknownCommandData);
+        
+        public void Read(ClassReadingBinaryReader reader)
         {
-            case LoadCommandId.LC_SEGMENT:
-            case LoadCommandId.LC_SEGMENT_64:
+            Command = (LoadCommandId) reader.ReadUInt32();
+            CommandSize = reader.ReadUInt32();
+
+            switch (Command)
             {
-                CommandData = reader.ReadReadableHereNoLock<MachOSegmentCommand>();
-                break;
+                case LoadCommandId.LC_SEGMENT:
+                case LoadCommandId.LC_SEGMENT_64:
+                {
+                    var cmd = new MachOSegmentCommand();
+                    cmd.Read(reader);
+                    CommandData = cmd;
+                    break;
+                }
+                case LoadCommandId.LC_SYMTAB:
+                {
+                    var cmd = new MachOSymtabCommand();
+                    cmd.Read(reader);
+                    CommandData = cmd;
+                    break;
+                }
+                case LoadCommandId.LC_DYLD_INFO:
+                case LoadCommandId.LC_DYLD_INFO_ONLY:
+                {
+                    var cmd = new MachODynamicLinkerCommand();
+                    cmd.Read(reader);
+                    CommandData = cmd;
+                    break;
+                }
+                default:
+                    UnknownCommandData = reader.ReadBytes((int) CommandSize - 8); // -8 because we've already read the 8 bytes of the header
+                    break;
             }
-            case LoadCommandId.LC_SYMTAB:
-            {
-                CommandData = reader.ReadReadableHereNoLock<MachOSymtabCommand>();
-                break;
-            }
-            case LoadCommandId.LC_DYLD_INFO:
-            case LoadCommandId.LC_DYLD_INFO_ONLY:
-            {
-                CommandData = reader.ReadReadableHereNoLock<MachODynamicLinkerCommand>();
-                break;
-            }
-            case LoadCommandId.LC_DYLD_CHAINED_FIXUPS:
-            {
-                CommandData = reader.ReadReadableHereNoLock<MachOLinkEditDataCommand>();
-                break;
-            }
-            default:
-                UnknownCommandData = reader.ReadByteArrayAtRawAddressNoLock(-1, (int)CommandSize - 8); // -8 because we've already read the 8 bytes of the header
-                break;
         }
     }
 }

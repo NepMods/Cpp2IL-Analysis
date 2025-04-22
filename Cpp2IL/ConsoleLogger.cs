@@ -1,83 +1,79 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
-using Cpp2IL.Core.Logging;
+using Cpp2IL.Core;
 using Pastel;
 
-namespace Cpp2IL;
-
-internal static class ConsoleLogger
+namespace Cpp2IL
 {
-    internal static readonly Color VERB = Color.Gray;
-    internal static readonly Color INFO = Color.LightBlue;
-    internal static readonly Color WARN = Color.Yellow;
-    internal static readonly Color ERROR = Color.DarkRed;
-
-    internal static bool DisableColor { private get; set; }
-
-    internal static bool ShowVerbose { private get; set; }
-
-    private static bool LastNoNewline;
-
-    public static void Initialize()
+    internal static class ConsoleLogger
     {
-        Logger.InfoLog += (message, source) => Write("Info", source, message, INFO);
-        Logger.WarningLog += (message, source) => Write("Warn", source, message, WARN);
-        Logger.ErrorLog += (message, source) => Write("Fail", source, message, ERROR);
+        internal static readonly Color VERB = Color.Gray;
+        internal static readonly Color INFO = Color.LightBlue;
+        internal static readonly Color WARN = Color.Yellow;
+        internal static readonly Color ERROR = Color.DarkRed;
 
-        Logger.VerboseLog += (message, source) =>
+        internal static bool DisableColor { private get; set; }
+
+        internal static bool ShowVerbose { private get; set; }
+
+        private static bool LastNoNewline;
+
+        public static void Initialize()
         {
-            if (ShowVerbose)
-                Write("Verb", source, message, VERB);
-        };
+            Logger.InfoLog += (message, source) => Write("Info", source, message, INFO);
+            Logger.WarningLog += (message, source) => Write("Warn", source, message, WARN);
+            Logger.ErrorLog += (message, source) => Write("Fail", source, message, ERROR);
 
-        CheckColorSupport();
-    }
+            Logger.VerboseLog += (message, source) =>
+            {
+                if (ShowVerbose)
+                    Write("Verb", source, message, VERB);
+            };
 
-    internal static void Write(string level, string source, string message, Color color)
-    {
-        if (!LastNoNewline)
-            WritePrelude(level, source, color);
-
-        LastNoNewline = message[^1] != '\n';
-
-        if (!DisableColor)
-            message = message.Pastel(color);
-
-        Console.Write(message);
-    }
-
-    private static void WritePrelude(string level, string source, Color color)
-    {
-        var message = $"[{level}] [{source}] ";
-        if (!DisableColor)
-            message = message.Pastel(color);
-
-        Console.Write(message);
-    }
-
-    public static void CheckColorSupport()
-    {
-        // if (Environment.OSVersion.Platform != PlatformID.Win32NT)
-        // {
-        //     DisableColor = true;
-        //     WarnNewline("Looks like you're running on a non-windows platform. Disabling ANSI color codes.");
-        // }
-        /*else*/
-        if (Directory.Exists(@"Z:\usr\"))
-        {
-            DisableColor = true;
-            Logger.WarnNewline("Looks like you're running in wine or proton. Disabling ANSI color codes.");
+            CheckColorSupport();
         }
-        else if (Environment.GetEnvironmentVariable("NO_COLOR") != null)
+
+        internal static void Write(string level, string source, string message, Color color)
         {
-            DisableColor = true; //Just manually set this, even though Pastel respects the environment variable
-            Logger.WarnNewline("NO_COLOR set, disabling ANSI color codes as you requested.");
+            if (!LastNoNewline)
+                WritePrelude(level, source, color);
+
+            LastNoNewline = !message.EndsWith("\n");
+
+            if (!DisableColor)
+                message = message.Pastel(color);
+
+            Console.Write(message);
         }
-        else
+
+        private static void WritePrelude(string level, string source, Color color)
         {
-            //Ensure we run the cctor for Pastel now.
-            ConsoleExtensions.Enable();
+            var message = $"[{level}] [{source}] ";
+            if (!DisableColor)
+                message = message.Pastel(color);
+            
+            Console.Write(message);
+        }
+
+        public static void CheckColorSupport()
+        {
+            // if (Environment.OSVersion.Platform != PlatformID.Win32NT)
+            // {
+            //     DisableColor = true;
+            //     WarnNewline("Looks like you're running on a non-windows platform. Disabling ANSI color codes.");
+            // }
+            /*else*/
+            if (Directory.Exists(@"Z:\usr\"))
+            {
+                DisableColor = true;
+                Logger.WarnNewline("Looks like you're running in wine or proton. Disabling ANSI color codes.");
+            }
+            else if (Environment.GetEnvironmentVariable("NO_COLOR") != null)
+            {
+                DisableColor = true; //Just manually set this, even though Pastel respects the environment variable
+                Logger.WarnNewline("NO_COLOR set, disabling ANSI color codes as you requested.");
+            }
         }
     }
 }

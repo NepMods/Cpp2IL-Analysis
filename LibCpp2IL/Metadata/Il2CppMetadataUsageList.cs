@@ -1,13 +1,8 @@
-namespace LibCpp2IL.Metadata;
-
-public class Il2CppMetadataUsageList : ReadableClass
+namespace LibCpp2IL.Metadata
 {
-    public uint start;
-    public uint count;
-
-    public override void Read(ClassReadingBinaryReader reader)
+    public class Il2CppMetadataUsageList
     {
-        start = reader.ReadUInt32();
-        count = reader.ReadUInt32();
+        public uint start;
+        public uint count;
     }
 }
